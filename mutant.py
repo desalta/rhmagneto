@@ -30,20 +30,18 @@ def validDna(dna):
 # dna = ["XXXXX",...]
 def isMutant(dna):
     size = len(dna)
+    dnaMutante = 0
 
     # Si existe menos de 4, seguro no es mutante
     if size <= 4:
         return False
 
-    # Incializacion de variables auxiliares
-    dnaMutante = 0
-
     # Analisis simultaneo, primera ocurrencia y termina
     for i in range(size):
 
         # Reinicia contadores
-        cantV = cantH = cantDs = cantDi = 0
-        letraV = letraH = letraDs = letraDi = None
+        cantV = cantH = 0
+        letraV = letraH = None
 
         for j in range(size):
 
@@ -73,33 +71,42 @@ def isMutant(dna):
                 letraV = dna[j][i]
                 cantV = 1
 
-            # Diagonal Superior
-            if j-i>0:
-                if dna[j-i][j] == letraDs:
-                    cantDs += 1
-                    if cantDs == 4:
-                        dnaMutante += 1
-                        print("{} : Diagonal Superior: Letra:{}".format(dna, letraDs))
-                        if dnaMutante == 2:
-                            print("{} : MUTANTE!!!".format(dna))
-                            return True
-                else:
-                    letraDs = dna[j-i][j]
-                    cantDs = 1
+    #Analisis diagonal Superior
+    for i in range(size):
+        cantDs = 0
+        letraDs = None
 
-            # Diagonal Inferior
-            if j+i<size:
-                if dna[j + i][j] == letraDi and i!=0:
-                    cantDi += 1
-                    if cantDi == 4:
-                        dnaMutante += 1
-                        print("{} : Diagonal Inferior: Letra:{}".format(dna, letraDi))
-                        if dnaMutante == 2:
-                            print("{} : MUTANTE!!!".format(dna))
-                            return True
-                else:
-                    letraDi = dna[j + i][j]
-                    cantDi = 1
+        for j in range(i,size):
+
+            if dna[j - i][j] == letraDs:
+                cantDs += 1
+                if cantDs == 4:
+                    dnaMutante += 1
+                    print("{} : Diagonal Superior: Letra:{}".format(dna, letraDs))
+                    if dnaMutante == 2:
+                        print("{} : MUTANTE!!!".format(dna))
+                        return True
+            else:
+                letraDs = dna[j - i][j]
+                cantDs = 1
+
+    # Analisis diagonal Inferior
+    for i in range(1,size):
+        cantDi = 0
+        letraDi = None
+
+        for j in range(size-i):
+            if dna[j + i][j] == letraDi:
+                cantDi += 1
+                if cantDi == 4:
+                    dnaMutante += 1
+                    print("{} : Diagonal Inferior: Letra:{}".format(dna, letraDi))
+                    if dnaMutante == 2:
+                        print("{} : MUTANTE!!!".format(dna))
+                        return True
+            else:
+                letraDi = dna[j + i][j]
+                cantDi = 1
 
     print("{} : humano :(".format(dna))
     return False
@@ -116,13 +123,14 @@ def testIsMutant():
     assert isMutant(["AAAAAA", "CXGTGC", "TTATGT", "AGAAGG", "XCCCTA", "TCACTG"]) == False
     assert isMutant(["ADFGHA", "CXGTGC", "TTXTGT", "AGAXKG", "XCCCXA", "TCACTG"]) == False
     assert isMutant(["ABCDEF", "GHIJKL", "MNOPQR", "STUVWX", "YZABCD", "EFGHIJ"]) == False
-    assert isMutant(["ABADEF", "AHIAKL", "MAOPAR", "STAVWA", "YZAACD", "EFGHIJ"]) == False
-    assert isMutant(["ABCDEF", "GHIJKL", "MNAPQR", "STUAWX", "YZABAD", "EFGHIA"]) == False
+    assert isMutant(["ABADEF", "AHIAKL", "MAOPAR", "STAVWA", "YZAACD", "EFGHIJ"]) == True
     assert isMutant(["ABCDEF", "GHIJKL", "MNAPQR", "STUAWX", "YZABAD", "AAAAIA"]) == True
     assert isMutant(["ABCDEF", "AHIJKL", "ANOPKR", "ATUVKX", "YZABKD", "EFGHIJ"]) == True
+    assert isMutant(["ABCDEF", "GHIJKL", "MNAPQR", "STUAWX", "YZABAD", "EFGHIA"]) == False
     assert isMutant(["ABCDEF", "GHIJKL", "MMMMQR", "STUVWX", "YZZZZD", "EFGHIJ"]) == True
     assert isMutant(["ABCDEF", "GHMJKL", "MNOMQR", "SMUVMX", "YZMBCM", "EFGMIJ"]) == True
     assert isMutant(["ABCDEF", "GHIJKL", "MNOPQR", "SMUVWX", "YZMBCD", "EFGMIJ"]) == False
+    assert isMutant(["ABADEF", "AHIAKL", "MAOPAR", "STAVWA", "YZAACD", "EFGHIJ"]) == True
 
     assert validDna({"ADFGHA": "ADFGHA"}) == False
     assert validDna("ADFGHAADFGHA") == False
