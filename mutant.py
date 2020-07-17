@@ -36,16 +36,14 @@ def isMutant(dna):
         return False
 
     # Incializacion de variables auxiliares
-    cantV = 0
-    letraV = None
     dnaMutante = 0
 
     # Analisis simultaneo, primera ocurrencia y termina
     for i in range(size):
 
         # Reinicia contadores
-        cantH = cantD = 0
-        letraH = letraD = None
+        cantV = cantH = cantDs = cantDi = 0
+        letraV = letraH = letraDs = letraDi = None
 
         for j in range(size):
 
@@ -76,18 +74,33 @@ def isMutant(dna):
                 cantV = 1
 
             # Analisis Diagonal, solo tiene una iteracion
-            if i == 0:
-                if dna[j][j] == letraD:
-                    cantD += 1
-                    if cantD == 4:
+            if size-j>0:
+
+                #Diagonal Superior
+                if dna[j-i][j] == letraDs:
+                    cantDs += 1
+                    if cantDs == 4:
                         dnaMutante += 1
-                        print("{} : Diagonal: Letra:{}".format(dna, letraD))
+                        print("{} : Diagonal Superior: Letra:{}".format(dna, letraDs))
                         if dnaMutante == 2:
                             print("{} : MUTANTE!!!".format(dna))
                             return True
                 else:
-                    letraD = dna[j][j]
-                    cantD = 1
+                    letraDs = dna[j-i][j]
+                    cantDs = 1
+
+                # Diagonal Inferior
+                if dna[j - i][j] == letraDi and i!=0:
+                    cantDi += 1
+                    if cantDi == 4:
+                        dnaMutante += 1
+                        print("{} : Diagonal Superior: Letra:{}".format(dna, letraDi))
+                        if dnaMutante == 2:
+                            print("{} : MUTANTE!!!".format(dna))
+                            return True
+                else:
+                    letraDi = dna[j - i][j]
+                    cantDi = 1
 
     print("{} : humano :(".format(dna))
     return False
@@ -103,6 +116,12 @@ def testIsMutant():
     assert isMutant(["XTGCGA", "CXGTXC", "TTATGT", "AGAAGG", "XCCCTA", "TCACTG"]) == False
     assert isMutant(["AAAAAA", "CXGTGC", "TTATGT", "AGAAGG", "XCCCTA", "TCACTG"]) == False
     assert isMutant(["ADFGHA", "CXGTGC", "TTXTGT", "AGAXKG", "XCCCXA", "TCACTG"]) == False
+    assert isMutant(["ABCDEF", "GHIJKL", "MNOPQR", "STUVWX", "YZABCD", "EFGHIJ"]) == False
+    assert isMutant(["ABADEF", "AHIAKL", "MAOPAR", "STAVWA", "YZAACD", "EFGHIJ"]) == True
+    assert isMutant(["ABCDEF", "GHIJKL", "MNAPQR", "STUAWX", "YZABAD", "EFGHIA"]) == False
+    assert isMutant(["ABCDEF", "GHIJKL", "MNAPQR", "STUAWX", "YZABAD", "AAAAIA"]) == True
+    assert isMutant(["ABCDEF", "AHIJKL", "ANOPKR", "ATUVKX", "YZABKD", "EFGHIJ"]) == True
+    assert isMutant(["ABCDEF", "GHIJKL", "MMMMQR", "STUVWX", "YZZZZD", "EFGHIJ"]) == True
 
     assert validDna({"ADFGHA": "ADFGHA"}) == False
     assert validDna("ADFGHAADFGHA") == False
