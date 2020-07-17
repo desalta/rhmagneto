@@ -36,13 +36,14 @@ def isMutant(dna):
     if size <= 4:
         return False
 
-    # Analisis simultaneo, primera ocurrencia y termina
+    # Analisis Simultaneo
     for i in range(size):
 
         # Reinicia contadores
-        cantV = cantH = 0
-        letraV = letraH = None
+        cantDi = cantDs = cantV = cantH = 0
+        letraDi = letraDs = letraV = letraH = None
 
+        # Analisis Horizontal y Vertical
         for j in range(size):
 
             # Analisis Horizontal
@@ -71,12 +72,8 @@ def isMutant(dna):
                 letraV = dna[j][i]
                 cantV = 1
 
-    #Analisis diagonal Superior
-    for i in range(size):
-        cantDs = 0
-        letraDs = None
-
-        for j in range(i,size):
+        # Analisis diagonal Superior
+        for j in range(i, size):
 
             if dna[j - i][j] == letraDs:
                 cantDs += 1
@@ -90,23 +87,21 @@ def isMutant(dna):
                 letraDs = dna[j - i][j]
                 cantDs = 1
 
-    # Analisis diagonal Inferior
-    for i in range(1,size):
-        cantDi = 0
-        letraDi = None
+        # Analisis diagonal Inferior
+        if i != 0:
+            for j in range(size - i):
+                if dna[j + i][j] == letraDi:
+                    cantDi += 1
+                    if cantDi == 4:
+                        dnaMutante += 1
+                        print("{} : Diagonal Inferior: Letra:{}".format(dna, letraDi))
+                        if dnaMutante == 2:
+                            print("{} : MUTANTE!!!".format(dna))
+                            return True
+                else:
+                    letraDi = dna[j + i][j]
+                    cantDi = 1
 
-        for j in range(size-i):
-            if dna[j + i][j] == letraDi:
-                cantDi += 1
-                if cantDi == 4:
-                    dnaMutante += 1
-                    print("{} : Diagonal Inferior: Letra:{}".format(dna, letraDi))
-                    if dnaMutante == 2:
-                        print("{} : MUTANTE!!!".format(dna))
-                        return True
-            else:
-                letraDi = dna[j + i][j]
-                cantDi = 1
 
     print("{} : humano :(".format(dna))
     return False
