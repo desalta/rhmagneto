@@ -1,6 +1,11 @@
-#RRHH Api Magneto
+RRHH Api Magneto
+-----
 
-La siguiente api le permite a magneto reclutar mutantes.
+La siguiente api le permite a magneto reclutar mutantes. Utiliza las siguientes tecnologias:
+- Python
+- Flask
+- Gunicorn
+- SQLAlchemy
 
 ### Algoritmo Principal
 El archivo mutant.py contiene el algoritmo principal.
