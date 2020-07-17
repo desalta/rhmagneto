@@ -126,6 +126,8 @@ def testIsMutant():
     assert isMutant(["ABCDEF", "GHMJKL", "MNOMQR", "SMUVMX", "YZMBCM", "EFGMIJ"]) == True
     assert isMutant(["ABCDEF", "GHIJKL", "MNOPQR", "SMUVWX", "YZMBCD", "EFGMIJ"]) == False
     assert isMutant(["ABADEF", "AHIAKL", "MAOPAR", "STAVWA", "YZAACD", "EFGHIJ"]) == True
+    assert isMutant(["ADFGHA", "CXGTGC", "AAOTGT", "AAAXKG", "XCAAXA", "TCAAAG"]) == True
+    assert isMutant(["ADFGHA", "CXGTGC", "AAOTGT", "AAOXKG", "XCAAXA", "TCAAAG"]) == False
 
     assert validDna({"ADFGHA": "ADFGHA"}) == False
     assert validDna("ADFGHAADFGHA") == False

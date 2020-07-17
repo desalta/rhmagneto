@@ -23,7 +23,8 @@ Cuenta con las siguientes funciones
 Se considera mutante si posee MAS de una secuencia de 4 letras iguales y seguidas, horizontal, verticual o diagonal. 
 - Si tiene ninguna o una secuencia de 4 letras iguales, es humano. 
 - Si tiene una secuencia igual, en dos o mas columnas, es mutante. Es decir, puede ser mutante aunque las secuencias se encuentren solo en verticales (analogamente, en dos o mas horizontales)  
-- Ademas una **secuencia igual** se considera cuando las letras iguales estan contiguas, por ejemplo "TTATTT", no posee es una secuencia de T (sacado del ejemplo). 
+- Ademas una **secuencia igual** se considera cuando las letras iguales estan contiguas, por ejemplo "TTATTT", no posee es una secuencia de T (sacado del ejemplo).
+- Teniendo en cuenta los ejemplos del enunciado, solo se considera las diagonales oblicuas de izquierda a derecha 
 
 ### Api RRHH
 
