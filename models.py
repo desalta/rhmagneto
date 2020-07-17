@@ -1,6 +1,6 @@
 from sqlalchemy import func
 
-from app import db
+from main import db
 import hashlib
 
 
@@ -25,11 +25,17 @@ class Dna(db.Model):
 
     @staticmethod
     def stats():
-        #Return human,mutant
+        mutant = human = 0
         result = db.session.query(
             Dna.mutant,
             func.count()
         ).group_by(Dna.mutant).order_by(Dna.mutant).all()
-        if len(result)>0:
-            return result[0][1],result[1][1]
-        return 0,0
+
+        if len(result) == 1:
+            mutant = 0 if result[0][0] else result[0][1]
+            human = 0 if not result[0][0] else result[0][1]
+        if len(result) == 2:
+            mutant = result[0][1]
+            human = result[1][1]
+
+        return mutant, human
