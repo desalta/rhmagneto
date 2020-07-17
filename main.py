@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from decouple import config as config_decouple
 from config import configs
+import mutant
 
 
 def create_app(enviroment):
@@ -32,3 +33,4 @@ import routes
 
 with app.app_context():
     db.create_all()
+    mutant.testIsMutant()

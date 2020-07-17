@@ -78,6 +78,7 @@ def isMutant(dna):
 
 
 def testIsMutant():
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Iniciando Testeos de los algoritmos mutantes >>>>>>>>>>>>>>>>>>>>>>>>>")
     assert isMutant(["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]) == True
     assert isMutant(["ATGCGA", "CAGTGC", "TTXTGT", "AGAXGG", "CCCCTA", "TCACTG"]) == True
     assert isMutant(["XTGCGA", "CXGTGC", "TTATGT", "AGAAGG", "XCCCTA", "TCACTG"]) == True
@@ -94,3 +95,5 @@ def testIsMutant():
     assert validDna(["AAAA", "TTTT", "CCCC", "GGGG"]) == True
     assert validDna(["ADF", "TCG", "TCG"]) == False
     assert validDna(["aTC", "aTC", "aTC"]) == False
+
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Todas las validaciones fueron correctas >>>>>>>>>>>>>>>>>>>>>>>>>")
